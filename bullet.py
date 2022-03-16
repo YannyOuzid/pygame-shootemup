@@ -1,7 +1,5 @@
 import pygame
-from enemy import Enemy
 from variable import Variable
-import random
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -13,14 +11,14 @@ class Bullet(pygame.sprite.Sprite):
         pygame.draw.rect(self.image, color, [0, 0, width, height])
 
     def update(self):
+        keys = pygame.key.get_pressed()
         if Variable.weapon == "normal":
-            self.rect.y += -7
+            self.rect.y += -10
         else:
             self.rect.y += -7
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                self.rect.x += 7
             if keys[pygame.K_RIGHT]:
+                self.rect.x += 7
+            if keys[pygame.K_LEFT]:
                 self.rect.x += -7
-        if self.rect.y < 50 or self.rect.x > 575 or self.rect.x < 0:
+        if self.rect.y < 35 or self.rect.x > 775 or self.rect.x < 0:
             self.kill()
