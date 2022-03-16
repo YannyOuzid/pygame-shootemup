@@ -37,6 +37,7 @@ while carryOn:
     keys = pygame.key.get_pressed()
     bomb = Bomb(Variable.WHITE, 550, 5)
     Variable.stageGenerator(Variable)
+    Variable.multiplicatorIncrement(Variable)
     player.controller(player.speed)
     player.changeWeapon()
 

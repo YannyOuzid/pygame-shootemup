@@ -27,7 +27,8 @@ class Enemy(pygame.sprite.Sprite):
                 for bonus in bonus_group:
                     self.createBonus(bonus, self.rect.x, self.rect.y)
             self.kill()
-            Variable.score = Variable.score + 100
+            Variable.enemyKilled += 1
+            Variable.score = Variable.score + (100 * Variable.multiplicator)
 
     def shootBulletEnemy(self, bullet):
         bullet.rect.x = self.rect.x + 10

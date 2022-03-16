@@ -69,6 +69,7 @@ class Player(pygame.sprite.Sprite):
             self.riskReward(bullet_enemy)
         if pygame.sprite.spritecollide(self, enemy, True) or pygame.sprite.spritecollide(self, bullet_enemy, True):
             Variable.lives = Variable.lives - 1
+            Variable.multiplicator = 1
         if pygame.sprite.spritecollide(self, bonus_group, True):
             for bonus in bonus_group:
                 bonus.create()

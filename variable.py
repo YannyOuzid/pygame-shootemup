@@ -24,6 +24,8 @@ class Variable():
     powerLevel = 1
     speedLevel = 1
     bomb = 5
+    multiplicator = 1
+    enemyKilled = 0
 
     def createScreen(self):
         self.screen.fill(self.screenColor)
@@ -42,6 +44,8 @@ class Variable():
         self.screen.blit(text, (810, 210))
         text = font.render("Bomb: " + str(self.bomb), 1, Variable.WHITE)
         self.screen.blit(text, (810, 240))
+        text = font.render("Multiplicator: " + str(self.multiplicator), 1, Variable.WHITE)
+        self.screen.blit(text, (250, 10))
 
     def gameOver(self):
         font = pygame.font.Font(None, 74)
@@ -59,6 +63,11 @@ class Variable():
             self.screenColor = self.PURPLE
         if self.score > 1500:
             self.enemyspawn = 500
+
+    def multiplicatorIncrement(self):
+        if self.enemyKilled == 5:
+            self.enemyKilled = 0
+            self.multiplicator += 0.5
 
 
 
