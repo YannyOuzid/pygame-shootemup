@@ -10,7 +10,7 @@ class Variable():
     BLACK = (0, 0, 0)
     RED = (243, 14, 14)
     PURPLE = (178, 0, 240)
-    size = (1000, 850)
+    size = (1050, 850)
     screen = pygame.display.set_mode(size)
     screenColor = [LIGHTBLUE, BLUE, PURPLE]
     screenColorDefault = LIGHTBLUE
@@ -52,6 +52,8 @@ class Variable():
         self.screen.blit(text, (250, 10))
         text = font.render("Highscore: " + str(self.highscore), 1, Variable.WHITE)
         self.screen.blit(text, (810, 10))
+        text = font.render("P : Pause/Highscores", 1, Variable.WHITE)
+        self.screen.blit(text, (810, 500))
 
     def gameOver(self):
         font = pygame.font.Font(None, 74)

@@ -20,7 +20,7 @@ bonus_group = pygame.sprite.Group()
 bomb_group = pygame.sprite.Group()
 
 player = Player()
-player.rect.x = 250
+player.rect.x = 375
 player.rect.y = 750
 
 pygame.display.flip()

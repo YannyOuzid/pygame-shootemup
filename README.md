@@ -1,12 +1,12 @@
-###Pygame shoot'em up project
+### Pygame shoot'em up project
 
-##Libraries
+### Libraries
 ```
 pygame : python -m pip install pygame
 pymongo : python3 -m pip install pymongo
 ```
 
-###Controls
+### Controls
 ```
 Arrows: Move your player
 Space: Use one bomb
@@ -14,7 +14,7 @@ Left Shift: `Change your player gameplay to risk mode (the touch must stay pushe
 P : Pause your game and see the highscores (top 10)
 ```
 
-###Interface
+### Interface
 ```
 Highscore: The highest score in the game
 Score: Your actual score
@@ -26,7 +26,7 @@ Lives: Number of lives
 Multiplier: The score multiplier
 ```
 
-###Rules
+### Rules
 ```
 This game is an infinite shootem up.
 Every five enemies killed without being touched, your multiplier and the enemies's 
@@ -36,7 +36,7 @@ the enemy's spawning speed and the multiplier are reset.
 When you have zero life the game is over.
 ```
 
-###Risk reward mechanic
+### Risk reward mechanic
 ```
 When you are in risk mode gameplay (keep the Left Shift pressed), 
 you can win some points by staying close to the enemiy bullets without being touched
