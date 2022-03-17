@@ -10,6 +10,7 @@ from bomb import Bomb
 pygame.init()
 
 pygame.display.set_caption("Project")
+pause = False
 
 player_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
@@ -31,13 +32,12 @@ carryOn = True
 clock = pygame.time.Clock()
 startEnemy = pygame.time.get_ticks()
 startShoot = pygame.time.get_ticks()
-shootEnemy = pygame.time.get_ticks()
 
 while carryOn:
     keys = pygame.key.get_pressed()
     bomb = Bomb(Variable.WHITE, 550, 5)
-    Variable.stageGenerator(Variable)
-    Variable.multiplicatorIncrement(Variable)
+    Variable.stageIncrement(Variable)
+    Variable.updateHighscore(Variable)
     player.controller(player.speed)
     player.changeWeapon()
 
@@ -45,9 +45,14 @@ while carryOn:
         if event.type == pygame.QUIT:
             carryOn = False
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_a:
-                if Variable.bomb > 0:
-                    player.shootBomb(bomb)
+            if event.key == pygame.K_SPACE and Variable.bomb > 0:
+                player.shootBomb(bomb)
+            if event.key == pygame.K_p:
+                while True:
+                    event = pygame.event.wait()
+                    Variable.pauseScreen(Variable)
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                        break
 
     if Variable.lives == 0:
         Variable.gameOver(Variable)
@@ -55,7 +60,7 @@ while carryOn:
 
     enemy = Enemy(Variable.BLACK, 25, 25)
     bonus = Bonus(Variable.bonusColor, 14, 14)
-    playerBullet = Bullet(Variable.WHITE, (5**Variable.powerLevel), 25)
+    playerBullet = Bullet(Variable.WHITE, (5 ** Variable.powerLevel), 25)
     enemyBullet = EnemyBullet(Variable.BLACK, 5, 5)
 
     now = pygame.time.get_ticks()

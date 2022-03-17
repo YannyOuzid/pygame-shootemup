@@ -1,6 +1,8 @@
 import pygame
 
+
 class EnemyBullet(pygame.sprite.Sprite):
+
     def __init__(self, color, width, height):
         pygame.sprite.Sprite.__init__(self)
         self.speed = 10
@@ -12,4 +14,3 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.rect.y += 7
         if self.rect.y < 50:
             self.kill()
-

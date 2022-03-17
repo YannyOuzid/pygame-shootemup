@@ -1,7 +1,6 @@
 import pygame
 import random
 from variable import Variable
-from bonus import Bonus
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -17,8 +16,6 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, bullet, bonus_group):
         self.rect.y += self.speed
-        if self.rect.x > 600:
-            self.rect.x -= self.rect.x
         if self.rect.y > 825:
             self.kill()
         if pygame.sprite.spritecollide(self, bullet, True):
@@ -28,7 +25,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.createBonus(bonus, self.rect.x, self.rect.y)
             self.kill()
             Variable.enemyKilled += 1
-            Variable.score = Variable.score + (100 * Variable.multiplicator)
+            Variable.score = Variable.score + (100 * Variable.multiplier)
 
     def shootBulletEnemy(self, bullet):
         bullet.rect.x = self.rect.x + 10
@@ -36,7 +33,7 @@ class Enemy(pygame.sprite.Sprite):
         bullet.update()
 
     def spawn(self):
-        self.rect.x = random.randint(25, 575)
+        self.rect.x = random.randint(25, 775)
         self.rect.y = 50
 
     def spawnCoolDown(self):

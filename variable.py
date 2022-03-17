@@ -1,5 +1,5 @@
 import pygame
-
+from mongo import Mongo
 
 class Variable():
     score = 0
@@ -12,7 +12,8 @@ class Variable():
     PURPLE = (178, 0, 240)
     size = (1000, 850)
     screen = pygame.display.set_mode(size)
-    screenColor = LIGHTBLUE
+    screenColor = [LIGHTBLUE, BLUE, PURPLE]
+    screenColorDefault = LIGHTBLUE
     weapon = "normal"
     power = 1
     speed = 1
@@ -24,11 +25,14 @@ class Variable():
     powerLevel = 1
     speedLevel = 1
     bomb = 5
-    multiplicator = 1
+    multiplier = 1
     enemyKilled = 0
+    stage = 0
+    highscore = Mongo.getHighscore(Mongo)
+    topHighscore = Mongo.getTop(Mongo)
 
     def createScreen(self):
-        self.screen.fill(self.screenColor)
+        self.screen.fill(self.screenColorDefault)
         pygame.draw.line(self.screen, Variable.WHITE, [0, 38], [800, 38], 2)
         pygame.draw.line(self.screen, Variable.WHITE, [800, 0], [800, 850], 2)
         font = pygame.font.Font(None, 34)
@@ -44,30 +48,48 @@ class Variable():
         self.screen.blit(text, (810, 210))
         text = font.render("Bomb: " + str(self.bomb), 1, Variable.WHITE)
         self.screen.blit(text, (810, 240))
-        text = font.render("Multiplicator: " + str(self.multiplicator), 1, Variable.WHITE)
+        text = font.render("Multiplier: x" + str(self.multiplier), 1, Variable.WHITE)
         self.screen.blit(text, (250, 10))
+        text = font.render("Highscore: " + str(self.highscore), 1, Variable.WHITE)
+        self.screen.blit(text, (810, 10))
 
     def gameOver(self):
         font = pygame.font.Font(None, 74)
         text = font.render("GAME OVER", 1, Variable.WHITE)
+        Mongo.post(Mongo, self.score)
         self.screen.blit(text, (250, 300))
         pygame.display.flip()
         pygame.time.wait(3000)
 
-    def stageGenerator(self):
-        if self.score > 500:
-            self.enemyspawn = 1500
-            self.screenColor = self.BLUE
-        if self.score > 1000:
-            self.enemyspawn = 1000
-            self.screenColor = self.PURPLE
-        if self.score > 1500:
-            self.enemyspawn = 500
-
-    def multiplicatorIncrement(self):
+    def stageIncrement(self):
         if self.enemyKilled == 5:
+            self.stage += 1
             self.enemyKilled = 0
-            self.multiplicator += 0.5
+            self.multiplier += 0.25
+            self.enemyspawn = self.enemyspawn/self.multiplier
+            if self.stage < 3:
+                self.screenColorDefault = self.screenColor[self.stage]
+
+    def pauseScreen(self):
+        font = pygame.font.Font(None, 74)
+        text = font.render("Pause / Highscore", 1, Variable.WHITE)
+        i = 1
+        for scores in self.topHighscore:
+            fontscore = pygame.font.Font(None, 50)
+            score = scores['score']
+            textscore = fontscore.render(str(i) + ". " + str(score), 1, Variable.WHITE)
+            self.screen.blit(textscore, (425, (200 + (i * 50))))
+            i += 1
+        screen = pygame.Surface((500,750))
+        screen.set_alpha(128)
+        screen.fill((255, 255, 255))
+        self.screen.blit(screen, (225, 75))
+        self.screen.blit(text, (250, 100))
+        pygame.display.flip()
+
+    def updateHighscore(self):
+        if self.score > self.highscore:
+            self.highscore = self.score
 
 
 

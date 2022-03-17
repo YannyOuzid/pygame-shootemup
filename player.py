@@ -1,8 +1,5 @@
 import pygame
 from variable import Variable
-import random
-import math
-from bomb import Bomb
 
 class Player(pygame.sprite.Sprite):
 
@@ -29,7 +26,7 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_DOWN]:
             self.moveDown(speed)
 
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_LSHIFT]:
             Variable.weapon = "normal"
         else:
             Variable.weapon = "risk"
@@ -69,7 +66,19 @@ class Player(pygame.sprite.Sprite):
             self.riskReward(bullet_enemy)
         if pygame.sprite.spritecollide(self, enemy, True) or pygame.sprite.spritecollide(self, bullet_enemy, True):
             Variable.lives = Variable.lives - 1
-            Variable.multiplicator = 1
+            Variable.enemyKilled = 0
+            Variable.enemyspawn = 2500
+            Variable.multiplier = 1
+            Variable.stage = 0
+            Variable.screenColorDefault = Variable.screenColor[0]
+            for enemy in enemy:
+                enemy.kill()
+            for bullet in bullet_enemy:
+                bullet.kill()
+            if Variable.powerLevel > 1:
+                Variable.powerLevel -= 1
+            if Variable.speedLevel > 1:
+                Variable.speedLevel -= 1
         if pygame.sprite.spritecollide(self, bonus_group, True):
             for bonus in bonus_group:
                 bonus.create()
